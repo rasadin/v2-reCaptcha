@@ -1,0 +1,82 @@
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/additional-methods.min.js'></script>
+
+
+
+<form id="basic-form" action="" method="post">
+    
+    <div class="g-recaptcha" data-sitekey="6Ld1bp8gAAAAAByRy0av0ShaMiksgBg8fOrtNjhB"></div>
+    <input type="hidden" class="hiddenRecaptcha required" name="hiddenRecaptcha" id="hiddenRecaptcha">
+    
+    
+    <p>
+          <label for="name">Name <span>(required, at least 3 characters)</span></label>
+          <input id="name" name="name">
+    </p>
+  
+    <p>
+          <label for="age">Your Age</label>
+          <input id="age" name="age">
+    </p>
+  
+    <p>
+          <label for="email">E-Mail <span>(required)</span></label>
+          <input id="email" name="email">
+    </p>
+  
+    <p>
+            <label for="weight">Weight</label>
+            <input id="weight" name="weight">
+    </p>
+  
+    <p>
+             <input class="submit" type="submit" value="submit">
+    </p>
+  
+</form>
+
+
+<script>
+    jQuery(document).ready(function($){
+      $("#basic-form").validate({
+          ignore: ".ignore",
+          rules: {
+              name: {
+                  required: true,
+                  minlength: 3
+              },
+              email: {
+                  required: true,
+                  email: true
+              },
+              hiddenRecaptcha: {
+                  required: function () {
+                      if (grecaptcha.getResponse() == '') {
+                          return true;
+                      } else {
+                          return false;
+                      }
+                  }
+              }
+          },
+      })
+    });
+</script>
+
+
+
+<!-- NOTICE THAT YOU MUST HAVE the ignore: ".ignore" in your code because jquery.validate ignores hidden fields by default, not validating them. -->
+
+
+
+<!-- If you want to remove the error message on reCapcha validate add a data-callback to the reCapcha element -->
+<!-- <div class="g-recaptcha" data-sitekey="{YOUR-SITE-KEY-HERE}" data-callback="recaptchaCallback"></div> -->
+<!-- And then in your js file add -->
+<!-- function recaptchaCallback() {
+  $('#hiddenRecaptcha').valid();
+}; -->
+
+<!-- help link: https://stackoverflow.com/questions/29563822/new-recaptcha-with-jquery-validation-plugin -->
+
+
